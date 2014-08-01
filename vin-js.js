@@ -3,9 +3,9 @@
  * Written by Brad Garland (bradg76 on github)
  *
  * With thanks to https://github.com/chilledham/Data-Validate-VIN
- * 
+ *
  * Usage:
- * 
+ *
  * valid_vin('12345678901234567');
  *
  * returns either true or false
@@ -25,6 +25,8 @@ valid_vin = function(vin) {
 };
 
 check_digit_check = function(vin) {
+  cleaned_vin = vin.toUpperCase();
+
   letter_map = {A : 1, B : 2, C : 3, D : 4, E : 5, F : 6, G : 7, H : 8,
                 J : 1, K : 2, L : 3, M : 4, N : 5,        P : 7,        R : 9,
                        S : 2, T : 3, U : 4, V : 5, W : 6, X : 7, Y : 8, Z : 9,
@@ -33,12 +35,12 @@ check_digit_check = function(vin) {
   weights = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
 
   products = 0;
-  for(var i = 0; i < vin.length; i++) {
+  for(var i = 0; i < cleaned_vin.length; i++) {
     // alert('adding ' + letter_map[vin[i]] + ' * ' + weights[i] + ' to ' + products);
-    products += letter_map[vin[i]] * weights[i];
+    products += letter_map[cleaned_vin[i]] * weights[i];
   }
   check_digit_should_be = products % 11;
   if(check_digit_should_be == 10) check_digit_should_be = 'X';
 
-  return check_digit_should_be == vin[8].toUpperCase();
+  return check_digit_should_be == cleaned_vin[8];
 }
